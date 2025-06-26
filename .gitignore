@@ -1,4 +1,6 @@
 venv/
 __pycache__/
 logs/
+semantic_cache/
 *.log
+*.pkl

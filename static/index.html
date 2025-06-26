@@ -478,7 +478,7 @@
             `).join('');
         }
 
-        // Start search
+// Start search
         async function startSearch() {
             if (searchKeywords.length === 0) {
                 showError('검색 키워드를 입력해주세요.');
@@ -504,12 +504,9 @@
                 eventSource.close();
             }
 
-            // Start SSE connection
-            eventSource = new EventSource('/api/stream-search');
-            
-            // Send search request
             try {
-                const response = await fetch('/api/stream-search', {
+                // First, start the search with POST request
+                const response = await fetch('/api/start-search', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -523,6 +520,11 @@
                     throw new Error('Search request failed');
                 }
 
+                const { search_id } = await response.json();
+
+                // Now connect to SSE stream with search_id
+                eventSource = new EventSource(`/api/stream-progress/${search_id}`);
+                
                 // Handle SSE events
                 eventSource.onmessage = function(event) {
                     const data = JSON.parse(event.data);
@@ -546,6 +548,12 @@
                     eventSource.close();
                     document.getElementById('searchButton').disabled = false;
                 });
+
+                eventSource.onerror = function(event) {
+                    showError('연결 오류가 발생했습니다.');
+                    eventSource.close();
+                    document.getElementById('searchButton').disabled = false;
+                };
 
             } catch (error) {
                 showError('검색 요청 실패: ' + error.message);

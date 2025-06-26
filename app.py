@@ -19,8 +19,10 @@ import sys
 import time
 import webbrowser
 import threading
+import uuid
 from datetime import datetime
 from pathlib import Path
+from typing import Dict
 
 from quart import Quart, request, jsonify, Response, send_file
 from quart_cors import cors
@@ -51,8 +53,14 @@ app = cors(app, allow_origin="*")
 STATIC_DIR = Path(__file__).parent / "static"
 INDEX_HTML_PATH = STATIC_DIR / "index.html"
 
-# Global searcher instance
+# Global searcher instance and search sessions
 searcher = None
+search_sessions: Dict[str, dict] = {}
+
+def open_browser():
+    """Open browser after server starts"""
+    time.sleep(1.5)  # Wait for server to start
+    webbrowser.open_new(f"http://{CONFIG['server']['host']}:{CONFIG['server']['port']}")
 
 async def initialize_searcher():
     """Initialize the searcher with API credentials"""
@@ -111,11 +119,11 @@ async def status():
         }
     })
 
-@app.route('/api/stream-search', methods=['POST'])
-async def stream_search():
-    """Stream search results using Server-Sent Events"""
+@app.route('/api/start-search', methods=['POST'])
+async def start_search():
+    """Start a new search and return search ID"""
     if not searcher:
-        return Response("Searcher not initialized", status=500)
+        return jsonify({'error': 'Searcher not initialized'}), 500
     
     try:
         data = await request.get_json()
@@ -123,41 +131,67 @@ async def stream_search():
         # Validate input
         keywords = data.get('keywords', [])
         if not keywords or not isinstance(keywords, list):
-            return Response("Invalid keywords format", status=400)
+            return jsonify({'error': 'Invalid keywords format'}), 400
         
         exclude_keywords = data.get('excludeKeywords', [])
         min_score = data.get('minScore', CONFIG['search']['min_relevance_score'])
         
-        logger.info(f"Starting search with keywords: {keywords}")
+        # Generate unique search ID
+        search_id = str(uuid.uuid4())
         
-        async def generate():
-            """Generate SSE stream"""
-            queue = asyncio.Queue()
-            
-            async def progress_callback(progress_data):
-                """Callback to queue progress updates"""
-                await queue.put(progress_data)
-            
-            # Start search in background task
-            search_task = asyncio.create_task(
-                search_with_context(
-                    keywords,
-                    exclude_keywords,
-                    min_score,
-                    progress_callback
-                )
+        # Initialize search session
+        search_sessions[search_id] = {
+            'status': 'starting',
+            'progress_queue': asyncio.Queue(),
+            'results': None,
+            'error': None
+        }
+        
+        logger.info(f"Starting search {search_id} with keywords: {keywords}")
+        
+        # Start search in background
+        asyncio.create_task(
+            run_search_background(
+                search_id,
+                keywords,
+                exclude_keywords,
+                min_score
             )
-            
-            # Stream progress updates
+        )
+        
+        return jsonify({'search_id': search_id})
+        
+    except Exception as e:
+        logger.error(f"Start search error: {e}", exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/stream-progress/<search_id>')
+async def stream_progress(search_id):
+    """Stream search progress via SSE"""
+    if search_id not in search_sessions:
+        return Response("Search ID not found", status=404)
+    
+    session = search_sessions[search_id]
+    
+    async def generate():
+        """Generate SSE stream"""
+        try:
             while True:
                 try:
                     # Wait for progress update with timeout
-                    item = await asyncio.wait_for(queue.get(), timeout=30.0)
+                    item = await asyncio.wait_for(
+                        session['progress_queue'].get(), 
+                        timeout=30.0
+                    )
                     
                     if 'results' in item:
                         # Final results
                         results_data = [cafe.to_dict() for cafe in item['results']]
                         yield f"event: complete\ndata: {json.dumps(results_data)}\n\n"
+                        break
+                    elif 'error' in item:
+                        # Error occurred
+                        yield f"event: error\ndata: {json.dumps(item)}\n\n"
                         break
                     else:
                         # Progress update
@@ -170,37 +204,58 @@ async def stream_search():
                     logger.error(f"Error in SSE stream: {e}")
                     yield f"event: error\ndata: {json.dumps({'error': str(e)})}\n\n"
                     break
-            
-            # Ensure task completes
-            try:
-                await search_task
-            except Exception as e:
-                logger.error(f"Search task error: {e}")
-        
-        headers = {
-            'Content-Type': 'text/event-stream',
-            'Cache-Control': 'no-cache',
-            'Transfer-Encoding': 'chunked',
-            'X-Accel-Buffering': 'no'
-        }
-        
-        return Response(generate(), headers=headers)
-        
-    except Exception as e:
-        logger.error(f"Stream search error: {e}", exc_info=True)
-        return jsonify({'error': str(e)}), 500
+        finally:
+            # Clean up session after completion or error
+            if search_id in search_sessions:
+                del search_sessions[search_id]
+    
+    headers = {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Transfer-Encoding': 'chunked',
+        'X-Accel-Buffering': 'no'
+    }
+    
+    return Response(generate(), headers=headers)
 
-async def search_with_context(keywords, exclude_keywords, min_score, progress_callback):
-    """Perform search with proper context management"""
-    async with searcher:
-        results = await searcher.search_cafes(
-            keywords,
-            exclude_keywords,
-            min_score,
-            progress_callback
-        )
-        # Send final results through callback
-        await progress_callback({'results': results})
+async def run_search_background(search_id, keywords, exclude_keywords, min_score):
+    """Run search in background and update progress"""
+    session = search_sessions[search_id]
+    
+    try:
+        session['status'] = 'running'
+        
+        # Define progress callback that's NOT async
+        def progress_callback(progress_data):
+            # Put item in queue synchronously
+            try:
+                loop = asyncio.get_event_loop()
+                loop.call_soon_threadsafe(
+                    session['progress_queue'].put_nowait,
+                    progress_data
+                )
+            except Exception as e:
+                logger.error(f"Error in progress callback: {e}")
+        
+        # Run search with context
+        async with searcher:
+            results = await searcher.search_cafes(
+                keywords,
+                exclude_keywords,
+                min_score,
+                progress_callback
+            )
+            
+            # Send final results
+            session['progress_queue'].put_nowait({'results': results})
+            session['status'] = 'completed'
+            session['results'] = results
+            
+    except Exception as e:
+        logger.error(f"Background search error: {e}", exc_info=True)
+        session['status'] = 'error'
+        session['error'] = str(e)
+        session['progress_queue'].put_nowait({'error': str(e)})
 
 @app.route('/api/export/csv', methods=['POST'])
 async def export_csv():
@@ -355,12 +410,6 @@ async def generate_queries():
     except Exception as e:
         logger.error(f"Query generation error: {e}")
         return jsonify({'error': str(e)}), 500
-
-# Browser auto-open helper
-def open_browser():
-    """Open browser after server starts"""
-    time.sleep(1.5)  # Wait for server to start
-    webbrowser.open_new(f"http://{CONFIG['server']['host']}:{CONFIG['server']['port']}")
 
 # Error handlers
 @app.errorhandler(404)

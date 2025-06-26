@@ -138,7 +138,7 @@ class EnhancedCafeSearcher:
             search_keywords: List of search keywords
             exclude_keywords: Keywords to exclude from results
             min_score: Minimum relevance score
-            progress_callback: Callback for progress updates
+            progress_callback: Callback for progress updates (synchronous)
             
         Returns:
             List of filtered and scored cafes
@@ -146,8 +146,8 @@ class EnhancedCafeSearcher:
         start_time = time.time()
         self.stats = SearchStatistics()  # Reset statistics
         
-        # Update progress
-        await self._update_progress(progress_callback, "검색을 시작합니다...", 5)
+        # Update progress (synchronous call)
+        self._update_progress(progress_callback, "검색을 시작합니다...", 5)
         
         # Generate intelligent queries for each keyword
         all_queries = []
@@ -171,7 +171,7 @@ class EnhancedCafeSearcher:
         self.stats.total_queries_generated = len(unique_queries)
         logger.info(f"Generated {len(unique_queries)} unique queries from {len(search_keywords)} keywords")
         
-        await self._update_progress(
+        self._update_progress(
             progress_callback, 
             f"{len(unique_queries)}개의 검색 쿼리를 생성했습니다.", 
             10
@@ -182,7 +182,7 @@ class EnhancedCafeSearcher:
         
         self.stats.unique_cafes_found = len(all_cafes)
         
-        await self._update_progress(
+        self._update_progress(
             progress_callback,
             f"{len(all_cafes)}개의 카페를 발견했습니다. 분석을 시작합니다...",
             50
@@ -203,7 +203,7 @@ class EnhancedCafeSearcher:
         # Sort by relevance score
         filtered_cafes.sort(key=lambda x: x.relevance_score, reverse=True)
         
-        await self._update_progress(
+        self._update_progress(
             progress_callback,
             f"검색 완료! {len(filtered_cafes)}개의 관련 카페를 찾았습니다.",
             100,
@@ -246,9 +246,9 @@ class EnhancedCafeSearcher:
                         all_cafes[cafe_url]['origin_queries'].add(query)
                         all_cafes[cafe_url]['titles'].add(result.title)
                 
-                # Update progress
+                # Update progress (synchronous call)
                 progress = 10 + int(((i + 1) / len(queries)) * 40)
-                await self._update_progress(
+                self._update_progress(
                     progress_callback,
                     f"검색 진행 중... ({i + 1}/{len(queries)})",
                     progress,
@@ -412,10 +412,10 @@ class EnhancedCafeSearcher:
                 
                 filtered_cafes.append(filtered_cafe)
             
-            # Update progress
+            # Update progress (synchronous call)
             if progress_callback and i % 10 == 0:
                 progress = 50 + int(((i + 1) / total_cafes) * 40)
-                await self._update_progress(
+                self._update_progress(
                     progress_callback,
                     f"카페 분석 중... ({i + 1}/{total_cafes})",
                     progress,
@@ -512,16 +512,20 @@ class EnhancedCafeSearcher:
         
         return ". ".join(notes)
     
-    async def _update_progress(self,
-                             callback: Optional[Callable],
-                             message: str,
-                             progress: int,
-                             **kwargs):
-        """Update progress through callback"""
+    def _update_progress(self,
+                         callback: Optional[Callable],
+                         message: str,
+                         progress: int,
+                         **kwargs):
+        """Update progress through callback (now synchronous)"""
         if callback:
             progress_data = {
                 'progress': progress,
                 'message': message,
                 **kwargs
             }
-            callback(progress_data)
+            # Call callback synchronously
+            try:
+                callback(progress_data)
+            except Exception as e:
+                logger.error(f"Error in progress callback: {e}")

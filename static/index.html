@@ -617,15 +617,189 @@
             <!-- 카테고리별 검색 템플릿 -->
             <div class="search-tabs">
                 <button class="tab-button active" data-tab="custom">🎯 맞춤 검색</button>
-                <button class="tab-button" data-tab="study">📚 스터디</button>
-                <button class="tab-button" data-tab="business">💼 비즈니스</button>
-                <button class="tab-button" data-tab="hobby">🎨 취미</button>
-                <button class="tab-button" data-tab="local">📍 지역</button>
-                <button class="tab-button" data-tab="community">👥 커뮤니티</button>
+                <button class="tab-button" data-tab="fashion">👕 패션/제조</button>
+                <button class="tab-button" data-tab="beauty">💄 뷰티</button>
+                <button class="tab-button" data-tab="export">🌍 수출/무역</button>
+                <button class="tab-button" data-tab="tech">🔬 기술/R&D</button>
+                <button class="tab-button" data-tab="general">💼 일반</button>
             </div>
 
-            <!-- 스터디 템플릿 -->
-            <div class="tab-content" id="tab-study" style="display: none;">
+            <!-- 패션/제조 템플릿 -->
+            <div class="tab-content" id="tab-fashion" style="display: none;">
+                <div class="template-grid">
+                    <div class="template-card" data-keywords='["의류제조", "봉제공장", "OEM", "ODM", "패션제조"]'>
+                        <div class="template-title">👕 패션 의류 제조</div>
+                        <div class="template-desc">의류 제조업체, OEM/ODM, 봉제공장 운영자들의 정보 공유</div>
+                        <div class="template-keywords">
+                            <span class="template-keyword">의류제조</span>
+                            <span class="template-keyword">봉제공장</span>
+                            <span class="template-keyword">OEM</span>
+                            <span class="template-keyword">ODM</span>
+                        </div>
+                    </div>
+                    <div class="template-card" data-keywords='["스마트팩토리", "자동화", "제조혁신", "공장관리"]'>
+                        <div class="template-title">🏭 스마트팩토리</div>
+                        <div class="template-desc">스마트공장 구축, 자동화 시스템, 제조업 혁신 커뮤니티</div>
+                        <div class="template-keywords">
+                            <span class="template-keyword">스마트팩토리</span>
+                            <span class="template-keyword">자동화</span>
+                            <span class="template-keyword">제조혁신</span>
+                            <span class="template-keyword">공장관리</span>
+                        </div>
+                    </div>
+                    <div class="template-card" data-keywords='["봉제", "재봉", "의류생산", "패턴", "소재"]'>
+                        <div class="template-title">✂️ 봉제/재봉 기술</div>
+                        <div class="template-desc">봉제 기술, 재봉기 정보, 의류 생산 기법 공유</div>
+                        <div class="template-keywords">
+                            <span class="template-keyword">봉제</span>
+                            <span class="template-keyword">재봉</span>
+                            <span class="template-keyword">의류생산</span>
+                            <span class="template-keyword">패턴</span>
+                        </div>
+                    </div>
+                    <div class="template-card" data-keywords='["패션브랜드", "의류창업", "브랜딩", "패션사업"]'>
+                        <div class="template-title">👔 패션 브랜드 창업</div>
+                        <div class="template-desc">패션 브랜드 런칭, 의류 브랜딩, 패션 창업 정보</div>
+                        <div class="template-keywords">
+                            <span class="template-keyword">패션브랜드</span>
+                            <span class="template-keyword">의류창업</span>
+                            <span class="template-keyword">브랜딩</span>
+                            <span class="template-keyword">패션사업</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 뷰티 템플릿 -->
+            <div class="tab-content" id="tab-beauty" style="display: none;">
+                <div class="template-grid">
+                    <div class="template-card" data-keywords='["화장품도매", "뷰티도매", "화장품유통", "B2B"]'>
+                        <div class="template-title">💄 화장품 도소매</div>
+                        <div class="template-desc">화장품 도매업, 뷰티 유통업체, B2B 거래 정보</div>
+                        <div class="template-keywords">
+                            <span class="template-keyword">화장품도매</span>
+                            <span class="template-keyword">뷰티도매</span>
+                            <span class="template-keyword">B2B</span>
+                            <span class="template-keyword">유통</span>
+                        </div>
+                    </div>
+                    <div class="template-card" data-keywords='["K뷰티", "한국화장품", "뷰티", "스킨케어"]'>
+                        <div class="template-title">🌟 K-뷰티</div>
+                        <div class="template-desc">한국 화장품, K-뷰티 트렌드, 한국 뷰티 브랜드 정보</div>
+                        <div class="template-keywords">
+                            <span class="template-keyword">K뷰티</span>
+                            <span class="template-keyword">한국화장품</span>
+                            <span class="template-keyword">뷰티</span>
+                            <span class="template-keyword">스킨케어</span>
+                        </div>
+                    </div>
+                    <div class="template-card" data-keywords='["스킨케어", "헤어케어", "화장품", "뷰티제품"]'>
+                        <div class="template-title">🧴 스킨케어/헤어케어</div>
+                        <div class="template-desc">스킨케어, 헤어케어 제품 정보 및 업계 동향</div>
+                        <div class="template-keywords">
+                            <span class="template-keyword">스킨케어</span>
+                            <span class="template-keyword">헤어케어</span>
+                            <span class="template-keyword">화장품</span>
+                            <span class="template-keyword">뷰티제품</span>
+                        </div>
+                    </div>
+                    <div class="template-card" data-keywords='["뷰티샵", "화장품매장", "뷰티소매", "매장운영"]'>
+                        <div class="template-title">🏪 뷰티샵 운영</div>
+                        <div class="template-desc">화장품 매장 운영, 뷰티샵 창업, 소매업 정보</div>
+                        <div class="template-keywords">
+                            <span class="template-keyword">뷰티샵</span>
+                            <span class="template-keyword">화장품매장</span>
+                            <span class="template-keyword">뷰티소매</span>
+                            <span class="template-keyword">매장운영</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 수출/무역 템플릿 -->
+            <div class="tab-content" id="tab-export" style="display: none;">
+                <div class="template-grid">
+                    <div class="template-card" data-keywords='["수출입", "글로벌무역", "해외수출", "국제무역"]'>
+                        <div class="template-title">🌍 글로벌 수출입</div>
+                        <div class="template-desc">해외 수출입, 글로벌 무역, 국제 비즈니스 정보</div>
+                        <div class="template-keywords">
+                            <span class="template-keyword">수출입</span>
+                            <span class="template-keyword">글로벌무역</span>
+                            <span class="template-keyword">해외수출</span>
+                            <span class="template-keyword">국제무역</span>
+                        </div>
+                    </div>
+                    <div class="template-card" data-keywords='["바이어", "B2B", "해외바이어", "글로벌파트너"]'>
+                        <div class="template-title">🏢 바이어 네트워킹</div>
+                        <div class="template-desc">해외 바이어 발굴, B2B 네트워킹, 글로벌 파트너십</div>
+                        <div class="template-keywords">
+                            <span class="template-keyword">바이어</span>
+                            <span class="template-keyword">B2B</span>
+                            <span class="template-keyword">해외바이어</span>
+                            <span class="template-keyword">글로벌파트너</span>
+                        </div>
+                    </div>
+                    <div class="template-card" data-keywords='["중동시장", "사우디", "UAE", "중동수출"]'>
+                        <div class="template-title">🇸🇦 중동 시장</div>
+                        <div class="template-desc">사우디, UAE 등 중동 시장 진출 및 비즈니스 정보</div>
+                        <div class="template-keywords">
+                            <span class="template-keyword">중동시장</span>
+                            <span class="template-keyword">사우디</span>
+                            <span class="template-keyword">UAE</span>
+                            <span class="template-keyword">중동수출</span>
+                        </div>
+                    </div>
+                    <div class="template-card" data-keywords='["미국시장", "캐나다", "북미수출", "USA"]'>
+                        <div class="template-title">🇺🇸 북미 시장</div>
+                        <div class="template-desc">미국, 캐나다 시장 진출 및 북미 비즈니스 정보</div>
+                        <div class="template-keywords">
+                            <span class="template-keyword">미국시장</span>
+                            <span class="template-keyword">캐나다</span>
+                            <span class="template-keyword">북미수출</span>
+                            <span class="template-keyword">USA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 기술/R&D 템플릿 -->
+            <div class="tab-content" id="tab-tech" style="display: none;">
+                <div class="template-grid">
+                    <div class="template-card" data-keywords='["RFID", "센서", "IoT", "무선인식", "스마트태그"]'>
+                        <div class="template-title">📡 RFID 기술</div>
+                        <div class="template-desc">RFID 시스템, 센서 기술, IoT 응용 기술 정보</div>
+                        <div class="template-keywords">
+                            <span class="template-keyword">RFID</span>
+                            <span class="template-keyword">센서</span>
+                            <span class="template-keyword">IoT</span>
+                            <span class="template-keyword">무선인식</span>
+                        </div>
+                    </div>
+                    <div class="template-card" data-keywords='["패션테크", "스마트의류", "웨어러블", "패션기술"]'>
+                        <div class="template-title">🔬 패션테크</div>
+                        <div class="template-desc">패션과 기술의 융합, 스마트 의류, 웨어러블 기술</div>
+                        <div class="template-keywords">
+                            <span class="template-keyword">패션테크</span>
+                            <span class="template-keyword">스마트의류</span>
+                            <span class="template-keyword">웨어러블</span>
+                            <span class="template-keyword">패션기술</span>
+                        </div>
+                    </div>
+                    <div class="template-card" data-keywords='["제조R&D", "생산기술", "공정혁신", "제조혁신"]'>
+                        <div class="template-title">🏭 제조업 R&D</div>
+                        <div class="template-desc">제조업 연구개발, 생산기술 혁신, 공정 개선</div>
+                        <div class="template-keywords">
+                            <span class="template-keyword">제조R&D</span>
+                            <span class="template-keyword">생산기술</span>
+                            <span class="template-keyword">공정혁신</span>
+                            <span class="template-keyword">제조혁신</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 일반 템플릿 (기존 유지) -->
+            <div class="tab-content" id="tab-general" style="display: none;">
                 <div class="template-grid">
                     <div class="template-card" data-keywords='["프로그래밍", "개발", "코딩"]'>
                         <div class="template-title">💻 프로그래밍 스터디</div>
@@ -636,39 +810,6 @@
                             <span class="template-keyword">코딩</span>
                         </div>
                     </div>
-                    <div class="template-card" data-keywords='["영어", "토익", "토플"]'>
-                        <div class="template-title">🌍 영어 학습</div>
-                        <div class="template-desc">영어 실력 향상을 위한 스터디 그룹</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">영어</span>
-                            <span class="template-keyword">토익</span>
-                            <span class="template-keyword">토플</span>
-                        </div>
-                    </div>
-                    <div class="template-card" data-keywords='["공무원", "시험", "공시"]'>
-                        <div class="template-title">📋 공무원 시험</div>
-                        <div class="template-desc">공무원 시험 준비생들의 정보 공유</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">공무원</span>
-                            <span class="template-keyword">시험</span>
-                            <span class="template-keyword">공시</span>
-                        </div>
-                    </div>
-                    <div class="template-card" data-keywords='["자격증", "시험", "자소서"]'>
-                        <div class="template-title">📜 자격증 스터디</div>
-                        <div class="template-desc">다양한 자격증 취득을 위한 스터디</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">자격증</span>
-                            <span class="template-keyword">시험</span>
-                            <span class="template-keyword">자소서</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 비즈니스 템플릿 -->
-            <div class="tab-content" id="tab-business" style="display: none;">
-                <div class="template-grid">
                     <div class="template-card" data-keywords='["창업", "스타트업", "사업"]'>
                         <div class="template-title">🚀 창업 커뮤니티</div>
                         <div class="template-desc">창업가들이 경험을 나누고 네트워킹하는 공간</div>
@@ -676,159 +817,6 @@
                             <span class="template-keyword">창업</span>
                             <span class="template-keyword">스타트업</span>
                             <span class="template-keyword">사업</span>
-                        </div>
-                    </div>
-                    <div class="template-card" data-keywords='["프리랜서", "부업", "사이드"]'>
-                        <div class="template-title">💼 프리랜서</div>
-                        <div class="template-desc">프리랜서들의 정보 공유와 프로젝트 협업</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">프리랜서</span>
-                            <span class="template-keyword">부업</span>
-                            <span class="template-keyword">사이드</span>
-                        </div>
-                    </div>
-                    <div class="template-card" data-keywords='["마케팅", "광고", "브랜딩"]'>
-                        <div class="template-title">📈 마케팅</div>
-                        <div class="template-desc">마케팅 전문가들의 노하우 공유</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">마케팅</span>
-                            <span class="template-keyword">광고</span>
-                            <span class="template-keyword">브랜딩</span>
-                        </div>
-                    </div>
-                    <div class="template-card" data-keywords='["투자", "재테크", "주식"]'>
-                        <div class="template-title">💰 투자/재테크</div>
-                        <div class="template-desc">투자와 재테크 정보를 공유하는 커뮤니티</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">투자</span>
-                            <span class="template-keyword">재테크</span>
-                            <span class="template-keyword">주식</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 취미 템플릿 -->
-            <div class="tab-content" id="tab-hobby" style="display: none;">
-                <div class="template-grid">
-                    <div class="template-card" data-keywords='["사진", "포토", "카메라"]'>
-                        <div class="template-title">📸 사진 동호회</div>
-                        <div class="template-desc">사진 촬영 기법과 작품을 공유하는 모임</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">사진</span>
-                            <span class="template-keyword">포토</span>
-                            <span class="template-keyword">카메라</span>
-                        </div>
-                    </div>
-                    <div class="template-card" data-keywords='["요리", "레시피", "맛집"]'>
-                        <div class="template-title">🍳 요리</div>
-                        <div class="template-desc">요리 레시피와 맛집 정보를 나누는 카페</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">요리</span>
-                            <span class="template-keyword">레시피</span>
-                            <span class="template-keyword">맛집</span>
-                        </div>
-                    </div>
-                    <div class="template-card" data-keywords='["독서", "책", "서평"]'>
-                        <div class="template-title">📚 독서 모임</div>
-                        <div class="template-desc">책을 읽고 감상을 나누는 독서 커뮤니티</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">독서</span>
-                            <span class="template-keyword">책</span>
-                            <span class="template-keyword">서평</span>
-                        </div>
-                    </div>
-                    <div class="template-card" data-keywords='["여행", "캠핑", "백패킹"]'>
-                        <div class="template-title">🎒 여행</div>
-                        <div class="template-desc">여행 정보와 경험을 공유하는 모임</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">여행</span>
-                            <span class="template-keyword">캠핑</span>
-                            <span class="template-keyword">백패킹</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 지역 템플릿 -->
-            <div class="tab-content" id="tab-local" style="display: none;">
-                <div class="template-grid">
-                    <div class="template-card" data-keywords='["강남", "서초", "역삼"]'>
-                        <div class="template-title">🏢 강남/서초</div>
-                        <div class="template-desc">강남, 서초 지역 정보와 모임</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">강남</span>
-                            <span class="template-keyword">서초</span>
-                            <span class="template-keyword">역삼</span>
-                        </div>
-                    </div>
-                    <div class="template-card" data-keywords='["홍대", "신촌", "마포"]'>
-                        <div class="template-title">🎨 홍대/신촌</div>
-                        <div class="template-desc">홍대, 신촌 지역의 문화와 모임</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">홍대</span>
-                            <span class="template-keyword">신촌</span>
-                            <span class="template-keyword">마포</span>
-                        </div>
-                    </div>
-                    <div class="template-card" data-keywords='["분당", "판교", "수지"]'>
-                        <div class="template-title">🌳 분당/판교</div>
-                        <div class="template-desc">분당, 판교 지역 커뮤니티</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">분당</span>
-                            <span class="template-keyword">판교</span>
-                            <span class="template-keyword">수지</span>
-                        </div>
-                    </div>
-                    <div class="template-card" data-keywords='["일산", "고양", "파주"]'>
-                        <div class="template-title">🏘️ 일산/고양</div>
-                        <div class="template-desc">일산, 고양 지역 주민 모임</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">일산</span>
-                            <span class="template-keyword">고양</span>
-                            <span class="template-keyword">파주</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 커뮤니티 템플릿 -->
-            <div class="tab-content" id="tab-community" style="display: none;">
-                <div class="template-grid">
-                    <div class="template-card" data-keywords='["육아", "맘카페", "육아맘"]'>
-                        <div class="template-title">👶 육아</div>
-                        <div class="template-desc">육아 정보와 경험을 나누는 맘카페</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">육아</span>
-                            <span class="template-keyword">맘카페</span>
-                            <span class="template-keyword">육아맘</span>
-                        </div>
-                    </div>
-                    <div class="template-card" data-keywords='["펜션", "민박", "게스트하우스"]'>
-                        <div class="template-title">🏠 숙박</div>
-                        <div class="template-desc">펜션, 민박 정보를 공유하는 카페</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">펜션</span>
-                            <span class="template-keyword">민박</span>
-                            <span class="template-keyword">게스트하우스</span>
-                        </div>
-                    </div>
-                    <div class="template-card" data-keywords='["반려동물", "강아지", "고양이"]'>
-                        <div class="template-title">🐕 반려동물</div>
-                        <div class="template-desc">반려동물을 사랑하는 사람들의 모임</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">반려동물</span>
-                            <span class="template-keyword">강아지</span>
-                            <span class="template-keyword">고양이</span>
-                        </div>
-                    </div>
-                    <div class="template-card" data-keywords='["결혼", "웨딩", "신혼"]'>
-                        <div class="template-title">💒 결혼/웨딩</div>
-                        <div class="template-desc">결혼 준비와 신혼 정보를 나누는 카페</div>
-                        <div class="template-keywords">
-                            <span class="template-keyword">결혼</span>
-                            <span class="template-keyword">웨딩</span>
-                            <span class="template-keyword">신혼</span>
                         </div>
                     </div>
                 </div>

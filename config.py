@@ -161,38 +161,117 @@ AI_MODEL_CONFIGS = {
 
 # --- Search Templates Configuration ---
 SEARCH_TEMPLATES = {
-    "study": {
+    "fashion": {
+        "clothing_manufacturing": {
+            "title": "👕 패션 의류 제조",
+            "keywords": ["의류제조", "봉제공장", "OEM", "ODM", "패션제조"],
+            "description": "의류 제조업체, OEM/ODM, 봉제공장 운영자들의 정보 공유",
+            "ai_boost": 1.3
+        },
+        "smart_factory": {
+            "title": "🏭 스마트팩토리",
+            "keywords": ["스마트팩토리", "자동화", "제조혁신", "공장관리"],
+            "description": "스마트공장 구축, 자동화 시스템, 제조업 혁신 커뮤니티",
+            "ai_boost": 1.4
+        },
+        "sewing_tech": {
+            "title": "✂️ 봉제/재봉 기술",
+            "keywords": ["봉제", "재봉", "의류생산", "패턴", "소재"],
+            "description": "봉제 기술, 재봉기 정보, 의류 생산 기법 공유",
+            "ai_boost": 1.2
+        },
+        "fashion_brand": {
+            "title": "👔 패션 브랜드 창업",
+            "keywords": ["패션브랜드", "의류창업", "브랜딩", "패션사업"],
+            "description": "패션 브랜드 런칭, 의류 브랜딩, 패션 창업 정보",
+            "ai_boost": 1.3
+        }
+    },
+    "beauty": {
+        "cosmetics_wholesale": {
+            "title": "💄 화장품 도소매",
+            "keywords": ["화장품도매", "뷰티도매", "화장품유통", "B2B"],
+            "description": "화장품 도매업, 뷰티 유통업체, B2B 거래 정보",
+            "ai_boost": 1.3
+        },
+        "k_beauty": {
+            "title": "🌟 K-뷰티",
+            "keywords": ["K뷰티", "한국화장품", "뷰티", "스킨케어"],
+            "description": "한국 화장품, K-뷰티 트렌드, 한국 뷰티 브랜드 정보",
+            "ai_boost": 1.4
+        },
+        "skincare_haircare": {
+            "title": "🧴 스킨케어/헤어케어",
+            "keywords": ["스킨케어", "헤어케어", "화장품", "뷰티제품"],
+            "description": "스킨케어, 헤어케어 제품 정보 및 업계 동향",
+            "ai_boost": 1.2
+        },
+        "beauty_shop": {
+            "title": "🏪 뷰티샵 운영",
+            "keywords": ["뷰티샵", "화장품매장", "뷰티소매", "매장운영"],
+            "description": "화장품 매장 운영, 뷰티샵 창업, 소매업 정보",
+            "ai_boost": 1.2
+        }
+    },
+    "export": {
+        "global_trade": {
+            "title": "🌍 글로벌 수출입",
+            "keywords": ["수출입", "글로벌무역", "해외수출", "국제무역"],
+            "description": "해외 수출입, 글로벌 무역, 국제 비즈니스 정보",
+            "ai_boost": 1.4
+        },
+        "buyer_networking": {
+            "title": "🏢 바이어 네트워킹",
+            "keywords": ["바이어", "B2B", "해외바이어", "글로벌파트너"],
+            "description": "해외 바이어 발굴, B2B 네트워킹, 글로벌 파트너십",
+            "ai_boost": 1.5
+        },
+        "middle_east": {
+            "title": "🇸🇦 중동 시장",
+            "keywords": ["중동시장", "사우디", "UAE", "중동수출"],
+            "description": "사우디, UAE 등 중동 시장 진출 및 비즈니스 정보",
+            "ai_boost": 1.3
+        },
+        "north_america": {
+            "title": "🇺🇸 북미 시장",
+            "keywords": ["미국시장", "캐나다", "북미수출", "USA"],
+            "description": "미국, 캐나다 시장 진출 및 북미 비즈니스 정보",
+            "ai_boost": 1.3
+        }
+    },
+    "tech": {
+        "rfid_tech": {
+            "title": "📡 RFID 기술",
+            "keywords": ["RFID", "센서", "IoT", "무선인식", "스마트태그"],
+            "description": "RFID 시스템, 센서 기술, IoT 응용 기술 정보",
+            "ai_boost": 1.4
+        },
+        "fashion_tech": {
+            "title": "🔬 패션테크",
+            "keywords": ["패션테크", "스마트의류", "웨어러블", "패션기술"],
+            "description": "패션과 기술의 융합, 스마트 의류, 웨어러블 기술",
+            "ai_boost": 1.5
+        },
+        "manufacturing_rd": {
+            "title": "🏭 제조업 R&D",
+            "keywords": ["제조R&D", "생산기술", "공정혁신", "제조혁신"],
+            "description": "제조업 연구개발, 생산기술 혁신, 공정 개선",
+            "ai_boost": 1.4
+        }
+    },
+    # 기존 템플릿도 일부 유지 (선택사항)
+    "general": {
         "programming": {
             "title": "💻 프로그래밍 스터디",
             "keywords": ["프로그래밍", "개발", "코딩"],
             "description": "개발자들이 모여 기술을 공유하고 함께 성장하는 카페",
             "ai_boost": 1.2
         },
-        "english": {
-            "title": "🌍 영어 학습",
-            "keywords": ["영어", "토익", "토플"],
-            "description": "영어 실력 향상을 위한 스터디 그룹",
-            "ai_boost": 1.1
-        },
-        "certification": {
-            "title": "📜 자격증 스터디",
-            "keywords": ["자격증", "시험", "자소서"],
-            "description": "다양한 자격증 취득을 위한 스터디",
-            "ai_boost": 1.0
-        }
-    },
-    "business": {
         "startup": {
             "title": "🚀 창업 커뮤니티",
             "keywords": ["창업", "스타트업", "사업"],
             "description": "창업가들이 경험을 나누고 네트워킹하는 공간",
             "ai_boost": 1.3
-        },
-        "freelancer": {
-            "title": "💼 프리랜서",
-            "keywords": ["프리랜서", "부업", "사이드"],
-            "description": "프리랜서들의 정보 공유와 프로젝트 협업",
-            "ai_boost": 1.2
         }
     }
 }

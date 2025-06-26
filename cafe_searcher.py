@@ -253,7 +253,8 @@ class EnhancedCafeSearcher:
                     f"검색 진행 중... ({i + 1}/{len(queries)})",
                     progress,
                     current_keyword=query,
-                    results_found=len(all_cafes)
+                    results_found=len(all_cafes),
+                    queries_generated=len(unique_queries)  # 생성된 쿼리 수
                 )
                 
             except Exception as e:
